@@ -15,7 +15,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Log in to Hugging Face
-        run: echo "${{ secrets.HF_TOKEN }}" | docker login hf.co -u ${{ secrets.HF_USERNAME }} --password-stdin
+        run: docker login -u "${{ secrets.HF_USERNAME }}" --password-stdin hf.co <<< "${{ secrets.HF_TOKEN }}"
 
       - name: Build Docker image
         run: docker build -t hf.co/spaces/${{ secrets.HF_USERNAME }}/fruit-clustering-api:latest .
