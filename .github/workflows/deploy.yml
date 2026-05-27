@@ -18,7 +18,13 @@ jobs:
         run: echo "${{ secrets.HF_TOKEN }}" | docker login -u "${{ secrets.HF_USERNAME }}" --password-stdin registry.hf.space
 
       - name: Build Docker image
-        run: docker build -t registry.hf.space/${{ secrets.HF_USERNAME }}-fruit-clustering-api:latest .
+        run: |
+          LOWERCASE_USER="${{ secrets.HF_USERNAME }}"
+          LOWERCASE_USER="${LOWERCASE_USER,,}"
+          docker build -t registry.hf.space/${LOWERCASE_USER}-fruit-clustering-api:latest .
 
       - name: Push to HF Space
-        run: docker push registry.hf.space/${{ secrets.HF_USERNAME }}-fruit-clustering-api:latest
+        run: |
+          LOWERCASE_USER="${{ secrets.HF_USERNAME }}"
+          LOWERCASE_USER="${LOWERCASE_USER,,}"
+          docker push registry.hf.space/${LOWERCASE_USER}-fruit-clustering-api:latest
