@@ -28,7 +28,7 @@ def predict(features: Features):
         data_scaled = scaler.transform(data)
         cluster = int(model.predict(data_scaled)[0])
         # Option : renvoyer aussi les coordonnées des centres
-        return {"cluster": cluster, "message": f"Point assigné au cluster {cluster}"}
+        return JSONResponse(content={"cluster": cluster, "message": f"Point assigné au cluster {cluster}"}, media_type="application/json; charset=utf-8")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
